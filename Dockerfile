@@ -27,6 +27,7 @@ RUN set -eux; \
         libpng-dev \
         libzip-dev \
         zlib1g-dev \
+        librabbitmq-dev \
     ; \
     \
     docker-php-ext-configure gd --enable-gd --with-jpeg; \
@@ -43,6 +44,12 @@ RUN set -eux; \
         zip \
     ; \
     \
+    pecl install -f \
+        amqp \
+    ; \
+    docker-php-ext-enable \
+        amqp \
+    ; \
     build-cleanup.sh; \
     \
     ldconfig /usr/local/lib; \
@@ -111,7 +118,6 @@ RUN set -eux; \
         locales-all \
         optipng \
         pngquant \
-        librabbitmq-dev \
         poppler-utils \
         webp \
     ; \
@@ -134,13 +140,11 @@ RUN set -eux; \
     pecl install -f \
         apcu \
         imagick \
-        amqp \
         redis \
     ; \
     docker-php-ext-enable \
         apcu \
         imagick \
-        amqp \
         redis \
     ; \
     \
